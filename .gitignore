@@ -1,3 +1,15 @@
+# macOS
+.DS_Store
+
+# Build artifacts
+bin/
+
+# Log files
+log/
+
+# Swap / editor files
+[._]*.sw[a-p]
+
 # Prerequisites
 *.d
 

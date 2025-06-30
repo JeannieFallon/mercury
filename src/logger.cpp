@@ -3,10 +3,19 @@
 #include <iomanip>
 #include <chrono>
 #include <sstream>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 Logger::Logger() : toFile(false) {}
 
 Logger::Logger(const std::string& filename) : toFile(true) {
+    // Create log dir if needed
+    size_t pos = filename.find_last_of('/');
+    if (pos != std::string::npos) {
+        std::string dir = filename.substr(0, pos);
+        mkdir(dir.c_str(), 0755);   // POSIX
+    }
+
     logfile.open(filename, std::ios::app);
 }
 

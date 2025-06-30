@@ -3,7 +3,7 @@
 
 int main() {
 
-    Logger logger("mercury.log");
+    Logger logger("log/mercury.log");
 
     logger.log(INFO, "Mercury reporting for duty!");
 
