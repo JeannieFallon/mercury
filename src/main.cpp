@@ -1,6 +1,12 @@
+#include "logger.h"
 #include <iostream>
 
 int main() {
-    std::cout << "Hello, Mercury!" << std::endl;
+
+    Logger logger("mercury.log");
+
+    logger.log(INFO, "Mercury reporting for duty!");
+
+    std::cout << "Hello, Clarice." << std::endl;
     return 0;
 }
