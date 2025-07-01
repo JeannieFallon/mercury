@@ -3,20 +3,26 @@
 #include <iomanip>
 #include <chrono>
 #include <sstream>
+#include <filesystem>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+namespace fs = std::filesystem;
 
 Logger::Logger() : toFile(false) {}
 
 Logger::Logger(const std::string& filename) : toFile(true) {
-    // Create log dir if needed
-    size_t pos = filename.find_last_of('/');
-    if (pos != std::string::npos) {
-        std::string dir = filename.substr(0, pos);
-        mkdir(dir.c_str(), 0755);   // POSIX
+    fs::path path(filename);
+
+    if (!path.parent_path().empty()) {
+        fs::create_directories(path.parent_path());
     }
 
     logfile.open(filename, std::ios::app);
+    if (!logfile.is_open()) {
+        std::cerr << "Logger ERROR: Failed to open log file: " << filename << std::endl;
+        toFile = false;
+    }
 }
 
 Logger::~Logger() {
